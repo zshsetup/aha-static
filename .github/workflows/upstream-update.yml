@@ -7,7 +7,7 @@ env:
   NAME: aha
   DIR: aha
   URL: https://github.com/theZiz/aha.git
-  PATTERN: '^[0-9]+(\.[0-9]+)+$'
+  PATTERN: '^0\.5$'
   RELEASE_SED: ''
 jobs:
   update:
