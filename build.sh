@@ -28,6 +28,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+export JOBS
 GLIBC_VER=2.17
 
 OS="$(uname -s)"
