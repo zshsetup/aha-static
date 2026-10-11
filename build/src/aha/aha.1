@@ -1,0 +1,139 @@
+.Dd August 4, 2020
+.Dt AHA 1
+.Os
+.Sh NAME
+.Nm aha
+.Nd Convert ANSI escape sequences to HTML
+.Sh SYNOPSIS
+.Nm
+.Op Fl bhlnprsvwx
+.Op Fl c Ar file
+.Op Fl f Ar file
+.Op Fl i Ar X
+.Op Fl L Ar LANG
+.Op Fl t Ar TITLE
+.Op Fl y Ar STYLE
+.Sh DESCRIPTION
+.Nm
+reads ECMA-48 SGR-colored text from the standard input, converts it to
+colored HTML and writes it to the standard output.
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl b , Fl Fl black
+Style HTML output to use a black background with white text.
+.It Fl c Ar file , Fl Fl css Ar file
+Adds the given css
+.Ar file
+to the output. In fact just adds <link rel="stylesheet" href="
+.Ar file
+" /> to the header.
+.It Fl f Ar file
+Read from
+.Ar file
+instead of from the standard input.
+.It Fl h , Fl Fl help , Fl \&?
+Print help for
+.Nm
+to the standard output.
+.It Fl i Ar X , Fl Fl iso Ar X
+Use the
+.Va ISO-8859- Ns Ar X
+character encoding instead of UTF-8 for the output, where
+.Ar X
+is a number from 1-16.
+.It Fl l , Fl Fl line-fix
+Use a fix for inputs using control sequences to change the cursor position.
+This is a hot fix, thus it may not work with every program.
+.It Fl L Ar LANG , Fl Fl lang Ar LANG
+Uses the
+.Va ISO-639-1 Ns
+ code
+.Ar LANG
+for the language.
+.It Fl n , Fl Fl no-header
+Do not enclose HTML output in
+.Va <html> , <head>
+and
+.Va <body>
+tags.
+.It Fl p , Fl Fl pink
+Style HTML output to use a pink background.
+.It Fl r , Fl Fl ignore-cr
+Ignore all carriage-returns (ASCII sign 13, \\r) which may lead to double new lines in html.
+.It Fl s , Fl Fl stylesheet
+Use a stylesheet instead of inline styles.
+.It Fl t Ar TITLE , Fl Fl title Ar TITLE
+Set the HTML document title to
+.Ar TITLE
+instead of
+.Qq stdin
+or the filename.
+.It Fl v , Fl Fl version
+Print version number of
+.Nm
+to the standard output and exit.
+.It Fl w , Fl Fl word-wrap
+Wrap long lines in the html output.
+Works with CSS3 supporting browsers and many older ones.
+.It Fl x , Fl Fl no-xml
+Don't use doctype xml but html (may useful for old browsers like IE)
+.It Fl y Ar STYLE , Fl Fl style Ar STYLE
+Sets the style used in the
+.Va <body>
+element to
+.Ar STYLE
+after styles set by other parameters.
+.El
+.Sh EXAMPLES
+Create an HTML file with a black background, a custom title and a larger font-size using
+.Nm Ap s
+help:
+.Pp
+.Dl $ aha -h | aha -b -t 'the awesome aha help' -y 'font-size:1.875em' > aha-help.html
+.Pp
+Create an HTML file with a white background using the output of
+.Xr diff 1 :
+.Pp
+.Dl $ diff -u --color=always oldfile.c newfile.c | aha > diff.html
+.Pp
+Create an HTML file with a black background from the output of
+.Xr htop 1 .
+You have to use option
+.Fl l
+due the other new-line-commands htop uses:
+.Pp
+.Dl $ echo q | htop | aha -b -l > htop.html
+.Pp
+Create an HTML file from the output of this man page.
+.Xr man 1
+uses bold and underline formatting from
+.Xr nroff 1 ,
+which
+.Xr ul 1
+converts to SGR:
+.Pp
+.Dl $ MAN_KEEP_FORMATTING=1 COLUMNS=80 man aha | ul | aha > man-aha.html
+.Sh SEE ALSO
+.Xr console_codes 4
+.Rs
+.%I Ecma
+.%D 1991
+.%R ECMA-48
+.%T Control Functions for Coded Character Sets
+.%P 61
+.Re
+.Sh AUTHORS
+The
+.Nm
+utility is maintained by
+.An Alexander Matthes So Ziz Sc Aq Mt ziz@mailbox.org .
+.Sh BUGS
+Blinking text using the HTML tag
+.Va <blink>
+and the css property
+.Va text-decoration:blink
+have been deprecated on modern browsers, thus requiring the use of option
+.Fl s
+and redefining the
+.Va .blink
+css class.

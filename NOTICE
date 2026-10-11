@@ -1,0 +1,17 @@
+The code in this repository (build.sh, tests/, README.md) is licensed under the MIT License;
+see LICENSE.
+
+The aha binaries produced by build.sh and published under GitHub Releases embed or are built
+from the following third-party projects, vendored unmodified as git submodules under vendor/ at
+their release tags. Each keeps its own license, and the binaries are governed by the licenses of
+these projects, not by the MIT License above.
+
+aha
+  https://github.com/theZiz/aha
+  Copyright (c) Alexander Matthes (Ziz) and contributors
+  License: GNU Lesser General Public License v2.0 or later (LGPL-2.0-or-later), or Mozilla
+  Public License v1.1 (MPL-1.1), dual licensed (see LICENSE.LGPLv2+ and LICENSE.MPL1.1)
+
+Anyone who redistributes these binaries (including the release archives from this repo) must
+satisfy these licenses, such as keeping their notices attached. The release workflow attaches the
+exact vendored sources used for the build (aha-static-sources.tar.gz) to every release.
